@@ -8,3 +8,9 @@ Execute this command to launch the tests
 ```shell
 py.test
 ```
+
+### Coverage
+
+```shell
+pytest --cov=src --cov-report=html --cov-report term-missing test/
+```

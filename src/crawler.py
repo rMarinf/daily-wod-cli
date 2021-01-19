@@ -14,13 +14,13 @@ class WODCrawler:
         formatted_day = today.strftime("%y%m%d")
 
         # 2. get web content
-        web_content = self.__get_web_content(formatted_day)
-        beautified_content = self.__beautify_content(web_content)
+        web_content = self._get_web_content(formatted_day)
+        beautified_content = self._beautify_content(web_content)
         message = "{0}\n\n{1}".format(formatted_day, beautified_content)
 
         return message
 
-    def __get_web_content(self, day: str) -> str:
+    def _get_web_content(self, day: str) -> str:
         """
         Get the daily WOD from Crossfit Web page
 
@@ -34,7 +34,7 @@ class WODCrawler:
         article_element = soup.find('div', class_=CONTENT_CLASS)
         return article_element.get_text()
 
-    def __beautify_content(self, content: str) -> str:
+    def _beautify_content(self, content: str) -> str:
         special_headers = ['beginner option:', 'intermediate option:']
         sentences = content.split('\n')
         parsed_content = []
@@ -49,7 +49,3 @@ class WODCrawler:
             parsed_content.append(sentence)
 
         return "\n".join(parsed_content)
-
-
-crawler = WODCrawler()
-print(crawler.get_wod())
