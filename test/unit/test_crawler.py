@@ -50,7 +50,7 @@ class TestWODCrawler:
         )
 
         formatted_day = date.today().strftime("%y%m%d")
-        message = self.crawler.get_wod()
+        message = self.crawler.get_wod(formatted_day)
         assert message == "{0}\n\n{1}".format(formatted_day, self.test_content)
 
     @pytest.mark.content(f"""<div class="_6zX5t4v71r1EQ1b1O0nO2 jYZW249J9cFebTPrzuIl0"><p>{test_content}</p></div>""")

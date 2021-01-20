@@ -1,6 +1,5 @@
 import requests
 
-from datetime import date
 from bs4 import BeautifulSoup
 
 from src.constants import URL_WEB, CONTENT_CLASS
@@ -8,11 +7,7 @@ from src.constants import URL_WEB, CONTENT_CLASS
 
 class WODCrawler:
 
-    def get_wod(self):
-        # 1. get day and format properly (YYMMDD)
-        today = date.today()
-        formatted_day = today.strftime("%y%m%d")
-
+    def get_wod(self, formatted_day):
         # 2. get web content
         web_content = self._get_web_content(formatted_day)
         beautified_content = self._beautify_content(web_content)
