@@ -1,6 +1,6 @@
 import click
 
-from src.controller import CLIController
+from src.cli_controller import CLIController
 
 cli_controller = CLIController()
 
