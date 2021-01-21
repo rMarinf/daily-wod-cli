@@ -12,7 +12,7 @@ Usage: daily-wod [OPTIONS]
   Get the WOD from Crossfit Web
 
 Options:
-  -d, --day TEXT  Select the day of WOD (format:yyyy-mm-dd)
+  -d, --day TEXT  Select the day of WOD (format:yyyy/mm/dd)
   --help          Show this message and exit.
 ```
 
