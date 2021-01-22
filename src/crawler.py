@@ -23,6 +23,7 @@ class WODCrawler:
         :return: content: return the daily wod information
         """
         # URL format:  'https://www.crossfit.com/210115'
+        # TODO: Better error handling
         page = requests.get('{0}/{1}'.format(URL_WEB, day))
         soup = BeautifulSoup(page.content, 'html.parser')
 
