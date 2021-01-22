@@ -1,7 +1,10 @@
 beautifulsoup4==4.9.3
 click==7.1.2
+environs==9.3.0
 pytest==6.2.1
 pytest-cov==2.11.0
 pytest-mock==3.5.1
 requests==2.25.1
 requests-mock==1.8.0
+python-telegram-bot==13.1
+setuptools~=51.1.2

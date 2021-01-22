@@ -1,4 +1,5 @@
 from click.testing import CliRunner
+from datetime import date
 from cli import cli
 
 
@@ -14,9 +15,11 @@ class TestCLI:
             assert '210121' in result.output
             assert 'Rest Day' in result.output
 
+            today_str = date.today().strftime("%y%m%d")
+            requests_mock.get('https://www.crossfit.com/{}'.format(today_str), text=html_response)
             result = runner.invoke(cli)
             assert result.exit_code == 0
-            assert '210121' in result.output
+            assert today_str in result.output
             assert 'Rest Day' in result.output
 
     def test_cli_bad_day(self):

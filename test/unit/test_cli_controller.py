@@ -1,6 +1,6 @@
 import pytest
 
-from src.cli_controller import CLIController
+from src.cli.controller import CLIController
 
 
 class TestCLIController:
