@@ -10,6 +10,9 @@ class WODCrawler:
     def get_wod(self, formatted_day):
         # 2. get web content
         web_content = self._get_web_content(formatted_day)
+        if web_content == '':
+            return 'No content for this day'
+
         beautified_content = self._beautify_content(web_content)
         message = "{0}\n\n{1}".format(formatted_day, beautified_content)
 
@@ -23,11 +26,13 @@ class WODCrawler:
         :return: content: return the daily wod information
         """
         # URL format:  'https://www.crossfit.com/210115'
-        # TODO: Better error handling
         page = requests.get('{0}/{1}'.format(URL_WEB, day))
         soup = BeautifulSoup(page.content, 'html.parser')
 
         article_element = soup.find('div', class_=CONTENT_CLASS)
+        if article_element is None:
+            return ''
+
         return article_element.get_text()
 
     def _beautify_content(self, content: str) -> str:
