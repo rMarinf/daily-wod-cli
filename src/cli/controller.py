@@ -9,7 +9,7 @@ class CLIController:
     def __init__(self):
         self.crawler = WODCrawler()
 
-    def get(self, day, show_content='telegram'):
+    def get(self, day, show_content='tty'):
         try:
             day = date.today() if day is None else datetime.strptime(day, '%Y/%m/%d')
             day_str = day.strftime("%y%m%d")
