@@ -1,5 +1,5 @@
 import json
-import re
+from unittest.mock import Mock
 
 from click.testing import CliRunner
 from datetime import date
@@ -25,19 +25,20 @@ class TestCLI:
             assert today_str in result.output
             assert 'Rest Day' in result.output
 
-    def test_cli_telegram(self, requests_mock):
+    def test_cli_telegram(self, requests_mock, mocker):
         with open('test/integration/mocks/response.html', 'r') as html_response_file:
-            with open('test/integration/mocks/telegram-response.json', 'r') as telegram_file:
-                html_response = html_response_file.read()
-                telegram_json_data = json.dumps(telegram_file.read())
-                runner = CliRunner()
-                requests_mock.get('https://www.crossfit.com/210121', text=html_response)
-                matcher = re.compile('https://api.telegram.org/bot*')
-                requests_mock.get(matcher, json=telegram_json_data)
-                result = runner.invoke(cli, ['--day', '2021/01/21', '--show-content', 'telegram'])
-                print(result)
-                assert result.exit_code == 0
-                assert 'Go to @DailyWOD channel to see the WOD =)\n' in result.output
+            html_response = html_response_file.read()
+
+            # Mock python-telegram-bot if not possible for another way :(
+            mocker.patch(
+                'src.telegram_bot.TelegramBot.send_wod',
+                return_value='Go to @DailyWOD channel to see the WOD =)'
+            )
+            runner = CliRunner()
+            requests_mock.get('https://www.crossfit.com/210121', text=html_response)
+            result = runner.invoke(cli, ['--day', '2021/01/21', '--show-content', 'telegram'])
+            assert result.exit_code == 0
+            assert 'Go to @DailyWOD channel to see the WOD =)\n' in result.output
 
     def test_cli_bad_day(self):
         runner = CliRunner()
