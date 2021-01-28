@@ -7,18 +7,8 @@ from src.constants import URL_WEB, CONTENT_CLASS
 
 class WODCrawler:
 
-    def get_wod(self, formatted_day):
-        # 2. get web content
-        web_content = self._get_web_content(formatted_day)
-        if web_content == '':
-            return 'No content for this day'
-
-        beautified_content = self._beautify_content(web_content)
-        message = "{0}\n\n{1}".format(formatted_day, beautified_content)
-
-        return message
-
-    def _get_web_content(self, day: str) -> str:
+    @staticmethod
+    def _get_web_content(day: str) -> str:
         """
         Get the daily WOD from Crossfit Web page
 
@@ -35,7 +25,8 @@ class WODCrawler:
 
         return article_element.get_text()
 
-    def _beautify_content(self, content: str) -> str:
+    @staticmethod
+    def _beautify_content(content: str) -> str:
         special_headers = ['beginner option:', 'intermediate option:']
         sentences = content.split('\n')
         parsed_content = []
@@ -50,3 +41,14 @@ class WODCrawler:
             parsed_content.append(sentence)
 
         return "\n".join(parsed_content)
+
+    def get_wod(self, formatted_day):
+        # 2. get web content
+        web_content = WODCrawler._get_web_content(formatted_day)
+        if web_content == '':
+            return 'No content for this day'
+
+        beautified_content = WODCrawler._beautify_content(web_content)
+        message = "{0}\n\n{1}".format(formatted_day, beautified_content)
+
+        return message

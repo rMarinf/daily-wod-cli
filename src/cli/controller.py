@@ -7,7 +7,7 @@ from src.telegram_bot import TelegramBot
 class CLIController:
 
     def __init__(self):
-        self.crawler = WODCrawler()
+        self._crawler = WODCrawler()
 
     def get(self, day, show_content='tty'):
         try:
@@ -16,7 +16,7 @@ class CLIController:
         except ValueError:
             return 'Invalid date format'
 
-        message = self.crawler.get_wod(day_str)
+        message = self._crawler.get_wod(day_str)
 
         if show_content == 'telegram':
             telegram_bot = TelegramBot()
